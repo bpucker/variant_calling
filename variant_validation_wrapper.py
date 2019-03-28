@@ -45,7 +45,7 @@ def submit_jobs_to_cluster( prefix, assembly_file, ref_seq_file, input_vcf, scri
 																ID,
 																"-l vf=1G",
 																"-l arch=lx-amd64",
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
