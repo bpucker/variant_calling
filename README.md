@@ -93,7 +93,7 @@ python variant_validator.py \
 
 # variant_validation_wrapper.py
 
-python variant_validaton_wrapper.py \
+python variant_validation_wrapper.py \
 --assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
 --ref <FULL_PATH_TO_REFERENCE_FILE> \
 --vcf <FULL_PATH_TO_INPUT_VCF_FILE> \
