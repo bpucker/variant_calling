@@ -1,5 +1,5 @@
 # variant calling
-These scripts were applied for variant calling and processing in the context of NAVIP: https://github.com/bpucker/NAVIP. Some scripts are only included for documentation purposes, while others were written in a generic way to facilitate re-use.
+These scripts were applied for variant calling and processing in the context of NAVIP: https://github.com/bpucker/NAVIP. Some scripts are only included for documentation purposes, while others were written in a generic way to facilitate re-use. All scripts are written in Python v2.7.
 
 
 
