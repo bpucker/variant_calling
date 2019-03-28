@@ -8,7 +8,7 @@ from operator import itemgetter
 
 # --- end of imports --- #
 
-__usage__ = """ python GATK_variant_calling.py\n
+__usage__ = """ python GATK1_BP.py\n
 				--input_bam_file <PATH_TO_BAM_FILE>\n
 				--ref_file <PATH_TO_REFERENCE_FILE>\n
 				--directory <PATH_TO_DIRECTORY>\n
@@ -150,7 +150,7 @@ def prepare_files_for_variant_calling_on_cluster( prefix, input_bam_file, header
 																"-l vf=30G",
 																"-l arch=lx-amd64",
 																"-l idle=1",
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
@@ -225,7 +225,7 @@ def recalibration_round( GATK, input_ref_file, duplicated_marked_bam_files, know
 																"-l arch=lx-amd64",
 																"-l idle=1",
 																'-pe multislot 4',
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
@@ -300,7 +300,7 @@ def base_recalibration( GATK, input_ref_file, duplicated_marked_bam_files, recal
 																"-l vf=35G",
 																"-l arch=lx-amd64",
 																"-l idle=1",
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
@@ -375,7 +375,7 @@ def run_realignment_on_cluster( prefix, bam_files, input_ref_file, target_lists,
 																"-l vf=35G",
 																"-l arch=lx-amd64",
 																"-l idle=1",
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
@@ -451,7 +451,7 @@ def run_haplotype_caller_on_cluster( prefix, bam_files, input_ref_file, GATK, pa
 																"-l arch=lx-amd64",
 																"-l idle=1",
 																'-pe multislot 4',
-																"-P fair_share",
+																"-P <GROUP>",
 																"-o",
 																out_file,
 																"-e",
