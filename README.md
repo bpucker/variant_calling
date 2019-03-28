@@ -18,6 +18,12 @@ python GATK_variant_calling.py\n
 				--bam_is_sorted (prevents sorting of bam file)
 
 
+# variant_call_preparation.py
+
+This script is used internaly to allow parallel processing of sequences in the reference data set.
+
+
+
 # GATK1_BP.py
 
 This script is intended as documentation of the process. It is customized for best performance on the local compute cluster. Re-use would require adjustments to certain parts of the script.
@@ -56,8 +62,50 @@ python VCF_combiner.py
 					--out <OUTPUT_VCF>
 
 
+# sort_vcf_by_fasta.py
+
+python sort_vcf_by_fasta.py\n
+			
+			--vcf <INPUT_VCF>\n
+			--fasta <INPUT_FASTA_FILE>\n
+			--output <OUTPUT_VCF_FILE>\n
 
 
+
+# variant_validator.py
+
+WARNING: number of sequences (chromosomes) should not exceed 9!
+
+
+python variant_validator.py
+	--assembly <FULL_PATH_TO_ASSEMBLY_FILE>
+	--ref <FULL_PATH_TO_REFERENCE_FILE>
+	--invcf <FULL_PATH_TO_INPUT_VCF_FILE>
+	--flank <INT, size of query sequence>
+	--outvcf <FULL_PATH_TO_OUTPUT_VCF>
+	--chr <CHROMOSOME_TO_PROCESS>
+	--outerr <FULL_PATH_TO_ERROR_OUTPUT_FILE>
+
+
+
+# variant_validation_wrapper.py
+
+python variant_validaton_wrapper.py
+	--assembly <FULL_PATH_TO_ASSEMBLY_FILE>
+	--ref <FULL_PATH_TO_REFERENCE_FILE>
+	--vcf <FULL_PATH_TO_INPUT_VCF_FILE>
+	--flank <INT, size of query sequence>
+	--out <FULL_PATH_TO_OUTPUT_DIRECTORY>
+	--script <FULL_PATH_TO variant_validator.py>
+
+
+
+# analyze_variant_set.py
+
+python analyze_variant_set.py
+					--vcf <FULL_PATH_TO_VCF_FILE (INPUT)>
+					--fig  <FULL_PATH_TO_FIGURE_FILE (OUTPUT)>
+					--report <FULL_PATH_TO_REPORT_FILE (OUTPUT)>
 
 
 
