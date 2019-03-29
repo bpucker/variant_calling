@@ -60,6 +60,8 @@ python GATK2_BP.py \
 
 # VCF_combiner.py
 
+This script combines the content of all VCF files detected in the provided input folder in a single VCF file.
+
 python VCF_combiner.py \
 --in <INPUT_DIRECTORY> \
 --out <OUTPUT_VCF>
@@ -67,6 +69,8 @@ python VCF_combiner.py \
 
 
 # sort_vcf_by_fasta.py
+
+This script sorts a given VCF file based on the oder of sequences in a given FASTA file.
 
 python sort_vcf_by_fasta.py \
 --vcf <INPUT_VCF> \
@@ -76,6 +80,8 @@ python sort_vcf_by_fasta.py \
 
 
 # variant_validator.py
+
+This script validates variants in a given VCF file by comparison against a high quality assembly. This assembly needs to be independent from the reads contributing to the analyzed variants.
 
 WARNING: number of sequences (chromosomes) should not exceed 9!
 
@@ -93,6 +99,8 @@ python variant_validator.py \
 
 # variant_validation_wrapper.py
 
+This script splits a given VCF file and allows parallel processing of variants in each sequence.
+
 python variant_validation_wrapper.py \
 --assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
 --ref <FULL_PATH_TO_REFERENCE_FILE> \
@@ -104,6 +112,8 @@ python variant_validation_wrapper.py \
 
 
 # analyze_variant_set.py
+
+This script calculates statistics and displays the genome-wide distribution of variants.
 
 python analyze_variant_set.py \
 --vcf <FULL_PATH_TO_VCF_FILE (INPUT)> \
