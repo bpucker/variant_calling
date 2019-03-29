@@ -84,7 +84,7 @@ python variant_validator.py \
 --assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
 --ref <FULL_PATH_TO_REFERENCE_FILE> \
 --invcf <FULL_PATH_TO_INPUT_VCF_FILE> \
---flank <INT, size of query sequence> \
+--flank <INT, SIZE_OF_QUERY_SEQUENCE> \
 --outvcf <FULL_PATH_TO_OUTPUT_VCF> \
 --chr <CHROMOSOME_TO_PROCESS> \
 --outerr <FULL_PATH_TO_ERROR_OUTPUT_FILE>
@@ -97,7 +97,7 @@ python variant_validation_wrapper.py \
 --assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
 --ref <FULL_PATH_TO_REFERENCE_FILE> \
 --vcf <FULL_PATH_TO_INPUT_VCF_FILE> \
---flank <INT, size of query sequence> \
+--flank <INT, SIZE_OF_QUERY_SEQUENCE> \
 --out <FULL_PATH_TO_OUTPUT_DIRECTORY> \
 --script <FULL_PATH_TO variant_validator.py>
 
