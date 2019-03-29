@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2616418.svg)](https://doi.org/10.5281/zenodo.2616418)
+
 # variant calling
 These scripts were applied for variant calling and processing in the context of NAVIP: https://github.com/bpucker/NAVIP. Some scripts are only included for documentation purposes, while others were written in a generic way to facilitate re-use. All scripts are written in Python v2.7.
 
