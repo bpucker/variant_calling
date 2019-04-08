@@ -122,3 +122,10 @@ python analyze_variant_set.py \
 --fig  <FULL_PATH_TO_FIGURE_FILE (OUTPUT)> \
 --report <FULL_PATH_TO_REPORT_FILE (OUTPUT)>
 
+
+
+
+# Reference (how to cite):
+Baasner, J.-S., Howard, D., Pucker, B.(2019). Influence of neighboring small sequence variants on functional impact prediction. bioRxiv. doi:10.1101/596718
+https://doi.org/10.1101/596718
+
