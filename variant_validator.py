@@ -57,7 +57,7 @@ def load_variants( vcf_file ):
 			line = f.readline()
 	variants = sorted( variants, key=itemgetter( 'chr', 'pos' ) )
 	
-	print "number of variants: " + str( len( variants ) )
+	#print "number of variants: " + str( len( variants ) )
 	
 	start = 0
 	for idx in range( len( variants ) ):
@@ -67,8 +67,8 @@ def load_variants( vcf_file ):
 			variants_split.update( { variants[idx]['chr'] : ( variants[start:idx+1] ) } )
 			start = idx + 1
 	
-	for each in variants_split.values():
-		print "number of variants: " + str( len( each ) )
+	#for each in variants_split.values():
+	#	print "number of variants: " + str( len( each ) )
 	
 	return variants_split
 
