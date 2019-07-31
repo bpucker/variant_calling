@@ -1,7 +1,9 @@
 ### Boas Pucker ###
 ### Dakota Howard ###
 ### bpucker@cebitec.uni-bielefeld.de ###
-### v0.1 ###
+### v0.2 ###
+
+### bug with missing last variant per sequence fixed on 31/07/2019 ###
 
 from operator import itemgetter
 import sys, time
@@ -12,7 +14,7 @@ __usage__ = """
 	--assembly <FULL_PATH_TO_ASSEMBLY_FILE>
 	--ref <FULL_PATH_TO_REFERENCE_FILE>
 	--invcf <FULL_PATH_TO_INPUT_VCF_FILE>
-	--flank <INT, size of query sequence>
+	--flank <INT, size of query sequence>[30]
 	--outvcf <FULL_PATH_TO_OUTPUT_VCF>
 	--chr <CHROMOSOME_TO_PROCESS>
 	--outerr <FULL_PATH_TO_ERROR_OUTPUT_FILE>
@@ -54,13 +56,20 @@ def load_variants( vcf_file ):
 					variants.append( { 'chr': parts[0], 'pos': int( parts[1] ), 'ref': parts[3], 'alt': parts[4], 'qual' : parts[5], 'filter' : parts[6], 'info' : parts[7] } )
 			line = f.readline()
 	variants = sorted( variants, key=itemgetter( 'chr', 'pos' ) )
+	
+	print "number of variants: " + str( len( variants ) )
+	
 	start = 0
 	for idx in range( len( variants ) ):
 		if len( variants ) == idx + 1:
 			variants_split.update( { variants[idx]['chr'] : ( variants[start:idx + 1] ) } )
 		elif variants[idx]['chr'] != variants[idx + 1]['chr']:
-			variants_split.update( { variants[idx]['chr'] : ( variants[start:idx] ) } )
+			variants_split.update( { variants[idx]['chr'] : ( variants[start:idx+1] ) } )
 			start = idx + 1
+	
+	for each in variants_split.values():
+		print "number of variants: " + str( len( each ) )
+	
 	return variants_split
 
 
@@ -254,12 +263,12 @@ def variant_validation( variants, output_vcf, flank_dist, ref_seq, assembly, fal
 			end_pos = variants[ i ]['pos']+flank_dist	#downstream end of range of variants to consider
 			variants_in_range = []     #downstream variants needed to construct query sequence
 			
-			#For validated downstream variants to be added to seq
-			if len(validated_variants) != 0:
-				n = len(validated_variants)
+			#for validated downstream variants to be added to seq
+			if len( validated_variants ) != 0:
+				n = len( validated_variants )
 				pos = validated_variants[ n - 1 ]['pos']
 
-				#Collect all variants within downstream range of flank_dist
+				#collect all variants within downstream range of flank_dist
 				while pos >= start_pos:
 					 n = n - 1
 					 if n == -1:
@@ -268,15 +277,15 @@ def variant_validation( variants, output_vcf, flank_dist, ref_seq, assembly, fal
 						variants_in_range.insert ( 0 , validated_variants[ n ] )
 					 pos = validated_variants[ n ]['pos']
 	
-			#break if the end of the variant list is reached
-			if i == len( variants ):
-				break
+			# #break if the end of the variant list is reached
+			# if i == len( variants ):
+				# break
 		
 			variants_to_consider.append( variants[ i ] )	#add current focal point variant
 
 			#If first SNP added has multiple variants check it byitself
 			if isinstance(variants[i]['alt'],list):
-				pass	
+				pass
 			 #use this case for first variant, because no check of prior variants is required """
 			elif len( validated_variants ) == 0:	
 				prev_val_variants = 0
@@ -334,8 +343,6 @@ def variant_validation( variants, output_vcf, flank_dist, ref_seq, assembly, fal
 			out.write( "#Chr\tPos\tID\tRef\tAlt\tQual\tStatus\tInfo\n" )
 		for size in range(len(bad_multi_variants)):
 			out.write( "\t".join( map( str, [ bad_multi_variants[size]['chr'], bad_multi_variants[size]['pos'], ".", bad_multi_variants[size]['ref'], ",".join(bad_multi_variants[size]['alt']), variant['qual'], "FAIL", variant['info'] ] ) ) + '\n' )
-
-	return [validated_variants]
 
 
 def main( arguments ):
