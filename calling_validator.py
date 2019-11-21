@@ -1,6 +1,6 @@
 ### Boas Pucker ###
 ### bpucker@cebitec.uni-bielefeld.de ###
-### v0.3 ###
+### v0.35 ###
 
 __usage__ = """
 					python calling_validator.py\n
@@ -93,10 +93,10 @@ def validate_vcf( vcf_file, seq_lengths, result_file, window_size ):
 					if chunks[ i ] > 0:
 						out.write( str( chunks[ i ]  ) + "\t" + str( window_size ) + '\n' )
 					else:
-						out.write( "ERROR: coverage is zero - " + chromosome + " - block idx: " + str( idx ) + "\n" )
+						out.write( "ERROR: coverage is zero - " + chromosome + " - block idx: " + str( i ) + "\n" )
 						valid = False
 				except KeyError:
-					out.write( "ERROR: coverage is zero - " + chromosome + " - block idx: " + str( idx ) + "\n" )
+					out.write( "ERROR: coverage is zero - " + chromosome + " - block idx: " + str( i ) + "\n" )
 					valid = False
 			
 			# --- check if all sequences are present --- #
