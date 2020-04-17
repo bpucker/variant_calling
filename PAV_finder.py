@@ -1,17 +1,19 @@
 ### Boas Pucker ###
 ### bpucker@cebitec.uni-bielefeld.de ###
-### v0.1 ###
+### v0.21 ###
 
 __usage__ = """
 					python PAV_finder.py
 					--cov1 <COVERAGE_FILE1>
 					--cov2 <COVERAGE_FILE2>
-					--gff <GFF_ANNOTATION_FILE>
 					--out <OUTPUT_FOLDER>
 					
 					optional:
+					--mode <MODE_OF_PAV_DETECTION(gene|genomic|zcr)>[genomic]
+					--gff <GFF_ANNOTATION_FILE>
 					--anno <FUNCTIONAL_ANNOTATION_FILE>
 					--mincov <MINIMAL_COMBINED_COVERAGE_OF_BOTH_SAMPLES_PER_GENE>
+					--blocksize <SIZE_FOR_GENOMIC_PAV_OR_ZCR_DETECTION>
 					
 					bug reports and feature requests: bpucker@cebitec.uni-bielefeld.de
 					"""
@@ -86,6 +88,23 @@ def load_genes( gff_file ):
 						ID = parts[-1].split('=')[1]
 					genes.update( { ID: { 'chr': parts[0], 'start': int(parts[3]), 'end': int( parts[4] ) } } )
 			line = f.readline()
+	return genes
+
+
+def generate_genomic_blocks( cov, blocksize ):
+	"""! @brief get genomic blocks to replace genes """
+	
+	genes = {}
+	for chromosome in cov.keys():
+		start = 0
+		end = 0 + blocksize
+		while end < len( cov[ chromosome ] ):
+			if min( [ end, len( cov[ chromosome ] ) ] ) - start >= blocksize:
+				genes.update( { 	chromosome + "_%_" + str( start ) + "_%_" + str( min( [ end, len( cov[ chromosome ] ) ] ) ):
+											{ 'chr': chromosome, 'start': start, 'end': min( [ end, len( cov[ chromosome ] ) ] ) } 
+										} )
+			start += blocksize
+			end += blocksize
 	return genes
 
 
@@ -175,6 +194,21 @@ def PAV_detection( cov_per_gene1, cov_per_gene2, PAV_file, anno, cov_cutoff ):
 				out.write( "\t".join( map( str, [ entry['id'], cov_per_gene1[ entry['id'] ], cov_per_gene2[ entry['id'] ], entry['ratio'], entry['z'], "n/a" ] ) ) + '\n' )
 
 
+def ZCR_detection( cov_per_gene1, cov_per_gene2, ZCR_file, cov_cutoff ):
+	"""! @brief detection of PAVs """
+	
+	# --- calculate ratios --- #
+	ZCRs = []
+	for key in sorted( cov_per_gene1.keys() ):
+		cov1 = cov_per_gene1[ key ]
+		cov2 = cov_per_gene2[ key ]
+		if cov1< cov_cutoff and cov1 < cov_cutoff:
+			ZCRs.append( key )
+	with open( ZCR_file, "w" ) as out:
+		out.write( "\n".join( ZCRs ) + '\n' )
+	return ZCRs
+
+
 def load_annotation( anno_file ):
 	"""! @brief load annotation from given file """
 	
@@ -195,8 +229,12 @@ def main( arguments ):
 	
 	cov_file1 = arguments[ arguments.index( '--cov1' )+1 ]
 	cov_file2 = arguments[ arguments.index( '--cov2' )+1 ]
-	gff_file = arguments[ arguments.index( '--gff' )+1 ]
 	output_dir = arguments[ arguments.index( '--out' )+1 ]
+	
+	if '--mode' in arguments:
+		mode = arguments[ arguments.index( '--mode' )+1 ].lower()
+	else:
+		mode = "genomic"
 	
 	if not os.path.exists( output_dir ):
 		os.makedirs( output_dir )
@@ -212,42 +250,98 @@ def main( arguments ):
 	else:
 		cov_cutoff = -1
 	
+	if '--blocksize' in arguments:
+		blocksize = int( arguments[ arguments.index( '--blocksize' )+1 ] )
+	else:
+		blocksize = 3000
+	
+	
 	doc_file1 = output_dir + "cov_per_gene1.txt"
 	doc_file2 = output_dir + "cov_per_gene2.txt"
 	
-	genes = load_genes( gff_file )
-	print "number of genes to check: " + str( len( genes.keys() ) )
+	# --- detection of PAVs --- #
+	if mode in [ "gene", "genomic" ]:
+		if mode == "gene":
+			gff_file = arguments[ arguments.index( '--gff' )+1 ]
+			genes = load_genes( gff_file )
+			print "number of genes to check: " + str( len( genes.keys() ) )
+		
+		
+		# --- handle coverage 1 --- #
+		genomic_block_state = False
+		if not os.path.isfile( doc_file1 ):
+			cov = load_coverage( cov_file1 )
+			if mode == "genomic":
+				genes = generate_genomic_blocks( cov, blocksize )
+				print "number of genoimc blocks to check: " + str( len( genes.keys() ) )
+				genomic_block_state = True
+			cov_per_gene1 = calculate_cov_per_gene( cov, genes )
+			with open( doc_file1, "w" ) as out:
+				for gene in sorted( cov_per_gene1.keys() ):
+					out.write( gene + '\t' + str( cov_per_gene1[gene] ) + '\n' )
+		else:
+			cov_per_gene1 = load_cov_per_gene( doc_file1 )
+		
+		# --- handle coverage 2 --- #
+		if not os.path.isfile( doc_file2 ):
+			cov = load_coverage( cov_file2 )
+			if mode == "genomic" and not genomic_block_state:
+				genes = generate_genomic_blocks( cov, blocksize )
+				print "number of genoimc blocks to check: " + str( len( genes.keys() ) )
+			cov_per_gene2 = calculate_cov_per_gene( cov, genes )
+			with open( doc_file2, "w" ) as out:
+				for gene in sorted( cov_per_gene2.keys() ):
+					out.write( gene + '\t' + str( cov_per_gene2[gene] ) + '\n' )
+		else:
+			cov_per_gene2 = load_cov_per_gene( doc_file2 )
 	
-	# --- handle coverage 1 --- #
-	if not os.path.isfile( doc_file1 ):
-		cov = load_coverage( cov_file1 )
-		cov_per_gene1 = calculate_cov_per_gene( cov, genes )
-		with open( doc_file1, "w" ) as out:
-			for gene in sorted( cov_per_gene1.keys() ):
-				out.write( gene + '\t' + str( cov_per_gene1[gene] ) + '\n' )
-	else:
-		cov_per_gene1 = load_cov_per_gene( doc_file1 )
+	# --- detection of ZCRs --- #
+	elif mode == "zcr":
+		# --- handle coverage 1 --- #
+		genomic_block_state = False
+		if not os.path.isfile( doc_file1 ):
+			cov = load_coverage( cov_file1 )
+			genes = generate_genomic_blocks( cov, blocksize )
+			print "number of genoimc blocks to check: " + str( len( genes.keys() ) )
+			genomic_block_state = True
+			cov_per_gene1 = calculate_cov_per_gene( cov, genes )
+			with open( doc_file1, "w" ) as out:
+				for gene in sorted( cov_per_gene1.keys() ):
+					out.write( gene + '\t' + str( cov_per_gene1[gene] ) + '\n' )
+		else:
+			cov_per_gene1 = load_cov_per_gene( doc_file1 )
+		
+		# --- handle coverage 2 --- #
+		if not os.path.isfile( doc_file2 ):
+			cov = load_coverage( cov_file2 )
+			if not genomic_block_state:
+				genes = generate_genomic_blocks( cov, blocksize )
+				print "number of genoimc blocks to check: " + str( len( genes.keys() ) )
+			cov_per_gene2 = calculate_cov_per_gene( cov, genes )
+			with open( doc_file2, "w" ) as out:
+				for gene in sorted( cov_per_gene2.keys() ):
+					out.write( gene + '\t' + str( cov_per_gene2[gene] ) + '\n' )
+		else:
+			cov_per_gene2 = load_cov_per_gene( doc_file2 )
 	
-	# --- handle coverage 1 --- #
-	if not os.path.isfile( doc_file2 ):
-		cov = load_coverage( cov_file2 )
-		cov_per_gene2 = calculate_cov_per_gene( cov, genes )
-		with open( doc_file2, "w" ) as out:
-			for gene in sorted( cov_per_gene2.keys() ):
-				out.write( gene + '\t' + str( cov_per_gene2[gene] ) + '\n' )
-	else:
-		cov_per_gene2 = load_cov_per_gene( doc_file2 )
 	
 	fig_file1 = output_dir + "coverage_per_gene1.pdf"
 	fig_file2 = output_dir + "coverage_per_gene2.pdf"
 	generate_figure( cov_per_gene1.values(), fig_file1 )
 	generate_figure( cov_per_gene2.values(), fig_file2 )
 	
-	PAV_file = output_dir + "PAVs.txt"
-	PAV_detection( cov_per_gene1, cov_per_gene2, PAV_file, anno, cov_cutoff )
+	if mode in [ "gene", "genomic" ]:
+		PAV_file = output_dir + "PAVs.txt"
+		PAV_detection( cov_per_gene1, cov_per_gene2, PAV_file, anno, cov_cutoff )
+	elif mode == "zcr":
+		ZCR_file = output_dir + "ZCRs.txt"
+		cov_cutoff = 1	#implement this option later
+		ZCRs = ZCR_detection( cov_per_gene1, cov_per_gene2, ZCR_file, cov_cutoff )
+		print "number of detected ZCRs: " + str( len( ZCRs ) )
+		
 
 
-if '--cov1' in sys.argv and '--cov2' in sys.argv and '--gff' in sys.argv and '--out' in sys.argv:
+if '--cov1' in sys.argv and '--cov2' in sys.argv and '--out' in sys.argv:
 	main( sys.argv )
 else:
 	sys.exit( __usage__ )
