@@ -202,7 +202,7 @@ def ZCR_detection( cov_per_gene1, cov_per_gene2, ZCR_file, cov_cutoff ):
 	for key in sorted( cov_per_gene1.keys() ):
 		cov1 = cov_per_gene1[ key ]
 		cov2 = cov_per_gene2[ key ]
-		if cov1< cov_cutoff and cov1 < cov_cutoff:
+		if cov1< cov_cutoff and cov2 < cov_cutoff:
 			ZCRs.append( key )
 	with open( ZCR_file, "w" ) as out:
 		out.write( "\n".join( ZCRs ) + '\n' )
