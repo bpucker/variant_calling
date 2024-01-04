@@ -150,6 +150,8 @@ python3 compare_stop_gain_events.py.py
 
 
 # dNdS_analysis.py
+This script performs an analysis of synonymous (dS) and non-synonymous (dN) variants in genes with premature stop codons.
+
 
 python dNdS_analysis.py
 --in <NAVIP_OUTPUT_FILE>
