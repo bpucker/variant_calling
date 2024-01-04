@@ -123,6 +123,38 @@ python analyze_variant_set.py \
 --report <FULL_PATH_TO_REPORT_FILE (OUTPUT)>
 
 
+# correct_VCF_format.py
+Add a last column (FORMAT) to an existing VCF-like file to meet the VCF requirements.
+
+python3 correct_VCF_format.py
+--in <INPUT_VCF>
+--out <OUTOUT_VCF>
+
+
+# separate_SNVs_InDels.py
+Separate SNVs and InDels from a VCF file by generating two separate new files.
+
+python3 separate_SNVs_InDels.py
+--in <INPUT_VCF_FILE>
+--snvout <OUTPUT_SNV_FILE>
+--indelout <OUTPUT_INDEL_FILE>
+
+
+# compare_stop_gain_events.py
+This script compares the stop_gain predictions of SnpEff and NAVIP.
+
+python3 compare_stop_gain_events.py.py
+--snpeffvcf <SnpEff_VCF_OUTPUT_FILE>
+--navipvcf <NAVIP_VCF_OUTPUT_FILE>
+--out <OUTPUT_FOLDER>
+
+
+# dNdS_analysis.py
+
+python dNdS_analysis.py
+--in <NAVIP_OUTPUT_FILE>
+--genes <GENE_IDs_FILE>
+--out <OUTPUT_FOLDER>
 
 
 # Reference (how to cite):
