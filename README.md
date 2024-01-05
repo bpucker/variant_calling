@@ -55,16 +55,41 @@ This script is used internaly to allow parallel processing of sequences in the r
 
 This script is intended as documentation of the process. It is customized for best performance on the local compute cluster. Re-use would require adjustments to certain parts of the script.
 
-python GATK1_BP.py \
---input_bam_file <PATH_TO_BAM_FILE> \
---ref_file <PATH_TO_REFERENCE_FILE> \
---directory <PATH_TO_DIRECTORY> \
---gold_vcf <PATH_TO_GOLD_STANDARD_VCF_FILE> \
---piccard <FULL_PATH_TO_PICCARD> \
---samtools <FULL_PATH_TO_SAMTOOLS> \
---gatk <FULL_PATH_TO_GATK> \
---varcallprepscript <FULL_PATH_TO variant_call_preparation.py> \
---bam_is_sorted (prevents sorting of bam file)
+
+```
+Usage
+python GATK1_BP.py
+
+Mandatory:
+--input_bam_file     STR   Path to BAM file.
+--ref_file           STR   Path to reference sequence file.
+--directory          STR   Output folder
+--gold_vcf           STR   Path to gold standard VCF
+--piccard            STR   Full path to piccard tools.
+--samtools           STR   Samtools path.
+--gatk               STR   Path to GATK.
+--varcallprepscript  STR   Path to variant_call_preparation.py.
+
+Optional:
+--bam_is_sorted          (prevents sorting of bam file).
+
+```
+
+`--input_bam_file` specifies full path to BAM input file.
+
+`--ref_file` specifies the full path to the reference genome sequence FASTA file.
+
+`--directory` specifies the output folder.
+
+`--gold_vcf` specifies the full path to the gold standard VCF.
+
+`--piccard` specifies the full path to piccard tools.
+
+`--samtools` specifies the full path to samtools.
+
+`--gatk` specifies the full path to GATK.
+
+`--varcallprepscript` specifies the full path to the Python script variant_call_preparation.py (see below).
 
 
 
