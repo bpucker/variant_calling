@@ -278,39 +278,89 @@ Mandatory:
 # separate_SNVs_InDels.py
 Separate SNVs and InDels from a VCF file by generating two separate new files.
 
+```
+Usage
 python3 separate_SNVs_InDels.py
---in <INPUT_VCF_FILE>
---snvout <OUTPUT_SNV_FILE>
---indelout <OUTPUT_INDEL_FILE>
+
+Mandatory:
+--in        STR   Path to input VCF file.
+--snvout    STR   Path to SNV output VCF file.
+--indelout  STR   Path to InDel output VCF file.
+```
+
+`--in` specifies the full path to the input VCF file.
+
+`--snvout` specifies the full path to the SNV output VCF file.
+
+`--indelout` specifies the full path to the InDel output VCF file.
+
+
 
 
 # compare_stop_gain_events.py
 This script compares the stop_gain predictions of SnpEff and NAVIP.
 
+```
+Usage
 python3 compare_stop_gain_events.py.py
---snpeffvcf <SnpEff_VCF_OUTPUT_FILE>
---navipvcf <NAVIP_VCF_OUTPUT_FILE>
---out <OUTPUT_FOLDER>
+
+Mandatory:
+--snpeffvcf  STR   Path to SnpEff output file.
+--navipvcf   STR   Path to NAVIP output file.
+--out        STR   Path to output folder.
+```
+
+`--snpeffvcf` specifies the SnpEff output VCF file that is required as input for this script.
+
+`--navipvcf` specifies the NAVIP output VCF file that is required as input for this script.
+
+`--out` specifies the output folder.
 
 
 # dNdS_analysis.py
 This script performs an analysis of synonymous (dS) and non-synonymous (dN) variants in genes with premature stop codons.
 
-
+```
+Usage
 python dNdS_analysis.py
---in <NAVIP_OUTPUT_FILE>
---genes <GENE_IDs_FILE>
---out <OUTPUT_FOLDER>
+
+Mandatory:
+--in     STR   Path to NAVIP output file.
+--genes  STR   Path to genes info file.
+--out    STR   Path to output folder.
+```
+
+`--in` specifies the NAVIP output file as input for this script.
+
+`--genes` specifies the gene info file that provides the IDs of genes with premature stop codons.
+
+`--out` specifies the folder for all output files.
+
+
 
 # compare_gene_exp_between_gene_groups.py
 This scripts takes the average expression per gene and compares these values between two groups of genes.
 
+```
+Usage
 python3 compare_gene_exp_between_gene_groups.py
---genes <SnpEff_VCF_OUTPUT_FILE>
---exp <NAVIP_VCF_OUTPUT_FILE>
---out <OUTPUT_FIGURE_FILE>
+
+Mandatory:
+--genes  STR   Path to genes info file.
+--exp    STR   Path to average expression file.
+--out    STR   Path to output folder.
+
 optional:
---gff <NAVIP_VCF_OUTPUT_FILE>
+--gff    STR   Path to GFF file.
+```
+
+`--genes` specifies the gene info file that provides the IDs of genes with premature stop codons.
+
+`--exp` specifies the path to a file with average gene expression. Gene IDs are in the first column, mean values in the second column, and median values in the third column.
+
+`--out` specifies the folder for all output files.
+
+`--gff` specifies the GFF3 file for background gene IDs.
 
 
 # Reference (how to cite):
