@@ -240,18 +240,39 @@ Mandatory:
 
 This script calculates statistics and displays the genome-wide distribution of variants.
 
-python analyze_variant_set.py \
---vcf <FULL_PATH_TO_VCF_FILE (INPUT)> \
---fig  <FULL_PATH_TO_FIGURE_FILE (OUTPUT)> \
---report <FULL_PATH_TO_REPORT_FILE (OUTPUT)>
+```
+Usage
+python analyze_variant_set.py
+
+Mandatory:
+--vcf      STR   Path to input VCF file.
+--fig      STR   Path to output figure.
+--report   STR   Path to report file.
+```
+
+`--vcf` specifies the full path to the input VCF file.
+
+`--fig` specifies the full path to the output figure file.
+
+`--report` specifies the full path to the report file.
 
 
 # correct_VCF_format.py
 Add a last column (FORMAT) to an existing VCF-like file to meet the VCF requirements.
 
+```
+Usage
 python3 correct_VCF_format.py
---in <INPUT_VCF>
---out <OUTOUT_VCF>
+
+Mandatory:
+--in   STR   Path to input VCF file.
+--out  STR   Path to output VCF file.
+```
+
+`--in` specifies the full path to the input VCF file.
+
+`--out` specifies the full path to the output VCF file.
+
 
 
 # separate_SNVs_InDels.py
