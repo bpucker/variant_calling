@@ -133,20 +133,40 @@ Optional:
 
 This script combines the content of all VCF files detected in the provided input folder in a single VCF file.
 
-python VCF_combiner.py \
---in <INPUT_DIRECTORY> \
---out <OUTPUT_VCF>
+```
+Usage
+python VCF_combiner.py
 
+Mandatory:
+--in   STR   Path to VCF input folder.
+--out  STR   Path to output file.
+```
+
+`--in` specifies the path to the input VCF folder.
+
+`--out` specifies the path to the output VCF file.
 
 
 # sort_vcf_by_fasta.py
 
 This script sorts a given VCF file based on the oder of sequences in a given FASTA file.
 
-python sort_vcf_by_fasta.py \
---vcf <INPUT_VCF> \
---fasta <INPUT_FASTA_FILE> \
---output <OUTPUT_VCF_FILE>
+```
+Usage
+python sort_vcf_by_fasta.py
+
+Mandatory:
+--vcf     STR   Path to input VCF.
+--fasta   STR   Path to input FASTA.
+--output  STR   Path to output VCF.
+```
+
+`--vcf` specifies the VCF input file.
+
+`--fasta` specifies the FASTA input file.
+
+`--output` specifies the VCF output file.
+
 
 
 
