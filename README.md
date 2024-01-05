@@ -55,7 +55,6 @@ This script is used internaly to allow parallel processing of sequences in the r
 
 This script is intended as documentation of the process. It is customized for best performance on the local compute cluster. Re-use would require adjustments to certain parts of the script.
 
-
 ```
 Usage
 python GATK1_BP.py
@@ -177,14 +176,33 @@ This script validates variants in a given VCF file by comparison against a high 
 WARNING: number of sequences (chromosomes) should not exceed 9!
 
 
-python variant_validator.py \
---assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
---ref <FULL_PATH_TO_REFERENCE_FILE> \
---invcf <FULL_PATH_TO_INPUT_VCF_FILE> \
---flank <INT, SIZE_OF_QUERY_SEQUENCE> \
---outvcf <FULL_PATH_TO_OUTPUT_VCF> \
---chr <CHROMOSOME_TO_PROCESS> \
---outerr <FULL_PATH_TO_ERROR_OUTPUT_FILE>
+```
+Usage
+python variant_validator.py
+
+Mandatory:
+--assembly   STR   Path to assembly file.
+--ref        STR   Path to reference genome sequence file.
+--invcf      STR   Path to input VCF file.
+--flank      INT   Length of flanking sequences.
+--outvcf     STR   Path to output VCF.
+--chr        STR   Chromosome name.
+--outerr     STR   Path to error output file.
+```
+
+`--assembly` specifies the full path to the assembly FASTA file.
+
+`--ref` specifies the full path to the reference genome FASTA file.
+
+`--invcf` specifies the full path to the input VCF file.
+
+`--flank` specifies the size of the flanking sequences of variants to run the validation.
+
+`--outvcf` specifies the full path to the output VCF.
+
+`--chr` specifies the name of a chromsome to run the validation for one chromosome at a time.
+
+`--outerr` specifies the full path to the error output file.
 
 
 
