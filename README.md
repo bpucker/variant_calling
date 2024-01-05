@@ -97,15 +97,36 @@ Optional:
 
 This script is intended as documentation of the process. It is customized for best performance on the local compute cluster. Re-use would require adjustments to certain parts of the script.
 
-python GATK2_BP.py \
---ref_file <FULL_PATH_TO_REF_FILE> \
---vcf_dir <FULL_PATH_TO_DIR_WITH_PREPARED_VCFs> \
---out_dir <FULL_PATH_TO_OUTPUT_DIR> \
---gold_vcf <FULL_PATH_TO_GOLD_STANDARD_VCF> \
---piccard <FULL_PATH_TO_PICCARD> \
---samtools <FULL_PATH_TO_SAMTOOLS> \
---gatk <FULL_PATH_TO_GATK>
+```
+Usage
+python GATK2_BP.py
 
+Mandatory:
+--ref_file           STR   Path to reference sequence file.
+--vcf_dir            STR   Path to VCF folder
+--out_dir            STR   Path to output folder
+--gold_vcf           STR   Path to gold standard VCF
+--piccard            STR   Full path to piccard tools.
+--samtools           STR   Samtools path.
+--gatk               STR   Path to GATK.
+
+Optional:
+--bam_is_sorted          (prevents sorting of bam file).
+```
+
+`--ref_file` specifies the full path to the reference genome sequence FASTA file.
+
+`--vcf_dir` specifies the folder containing the VCF files.
+
+`--out_dir` specifies the output folder.
+
+`--gold_vcf` specifies the full path to the gold standard VCF.
+
+`--piccard` specifies the full path to piccard tools.
+
+`--samtools` specifies the full path to samtools.
+
+`--gatk` specifies the full path to GATK.
 
 
 # VCF_combiner.py
