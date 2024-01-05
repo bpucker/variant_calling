@@ -29,12 +29,19 @@ Optional:
 ```
 
 `--input_bam_file` specifies full path to BAM input file.
+
 `--ref_file` specifies the full path to the reference genome sequence FASTA file.
+
 `--directory` specifies the output folder.
+
 `--piccard` specifies the full path to piccard tools.
+
 `--samtools` specifies the full path to samtools.
+
 `--gatk` specifies the full path to GATK.
+
 `--varcallprepscript` specifies the full path to the Python script variant_call_preparation.py (see below).
+
 `--varsortscript` specifies the full path to the Python script sort_vcf_by_fasta.py (see below).
 
 
