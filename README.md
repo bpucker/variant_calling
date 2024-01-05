@@ -158,6 +158,16 @@ python dNdS_analysis.py
 --genes <GENE_IDs_FILE>
 --out <OUTPUT_FOLDER>
 
+# compare_gene_exp_between_gene_groups.py
+This scripts takes the average expression per gene and compares these values between two groups of genes.
+
+python3 compare_gene_exp_between_gene_groups.py
+--genes <SnpEff_VCF_OUTPUT_FILE>
+--exp <NAVIP_VCF_OUTPUT_FILE>
+--out <OUTPUT_FIGURE_FILE>
+optional:
+--gff <NAVIP_VCF_OUTPUT_FILE>
+
 
 # Reference (how to cite):
 Baasner, J.-S., Howard, D., Pucker, B.(2019). Influence of neighboring small sequence variants on functional impact prediction. bioRxiv. doi:10.1101/596718
