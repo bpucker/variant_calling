@@ -175,7 +175,6 @@ This script validates variants in a given VCF file by comparison against a high 
 
 WARNING: number of sequences (chromosomes) should not exceed 9!
 
-
 ```
 Usage
 python variant_validator.py
@@ -210,14 +209,31 @@ Mandatory:
 
 This script splits a given VCF file and allows parallel processing of variants in each sequence.
 
-python variant_validation_wrapper.py \
---assembly <FULL_PATH_TO_ASSEMBLY_FILE> \
---ref <FULL_PATH_TO_REFERENCE_FILE> \
---vcf <FULL_PATH_TO_INPUT_VCF_FILE> \
---flank <INT, SIZE_OF_QUERY_SEQUENCE> \
---out <FULL_PATH_TO_OUTPUT_DIRECTORY> \
---script <FULL_PATH_TO variant_validator.py>
+```
+Usage
+python variant_validation_wrapper.py
 
+Mandatory:
+--assembly  STR   Path to assembly file.
+--ref       STR   Path to reference file.
+--vcf       STR   Path to input VCF file.
+--flank     INT   Length of flanking sequences.
+--out       STR   Path to the output folder.
+--script    STR   Path to variant_validator.py
+
+```
+
+`--assembly` specifies the full path to the assembly FASTA file.
+
+`--ref` specifies the full path to the reference genome sequence FASTA file.
+
+`--vcf` specifies the input VCF file.
+
+`--flank` specifies the length of the variant flanking sequence used for validation.
+
+`--out` specifies the output folder.
+
+`--script` specifies the full path to the script variant_validator.py.
 
 
 # analyze_variant_set.py
