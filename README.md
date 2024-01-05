@@ -4,22 +4,38 @@
 These scripts were applied for variant calling and processing in the context of NAVIP: https://github.com/bpucker/NAVIP. Some scripts are only included for documentation purposes, while others were written in a generic way to facilitate re-use. All scripts are written in Python v2.7.
 
 
-
 # GATK_variant_calling.py
 
 This script is intended as documentation of the process. It is customized for best performance on the local compute cluster. Re-use would require adjustments to certain parts of the script.
 
-python GATK_variant_calling.py \
---input_bam_file <PATH_TO_BAM_FILE> \
---ref_file <PATH_TO_REFERENCE_FILE> \
---directory <PATH_TO_DIRECTORY> \
---piccard <FULL_PATH_TO_PICCARD> \
---samtools <FULL_PATH_TO_SAMTOOLS> \
---gatk <FULL_PATH_TO_GATK> \
---varcallprepscript <FULL_PATH_TO variant_call_preparation.py> \
---varsortscript <FULL_PATH_TO sort_vcf_by_fasta.py> \
---bam_is_sorted (prevents sorting of bam file)
 
+```
+Usage
+python GATK_variant_calling.py
+
+Mandatory:
+--input_bam_file     STR   Path to BAM file.
+--ref_file           STR   Path to reference sequence file.
+--directory          STR   Output folder
+--piccard            STR   Full path to piccard tools.
+--samtools           STR   Samtools path.
+--gatk               STR   Path to GATK.
+--varcallprepscript  STR   Path to variant_call_preparation.py.
+--varsortscript      STR   Path to sort_vcf_by_fasta.py.
+
+Optional:
+--bam_is_sorted          (prevents sorting of bam file).
+
+```
+
+`--input_bam_file` specifies full path to BAM input file.
+`--ref_file` specifies the full path to the reference genome sequence FASTA file.
+`--directory` specifies the output folder.
+`--piccard` specifies the full path to piccard tools.
+`--samtools` specifies the full path to samtools.
+`--gatk` specifies the full path to GATK.
+`--varcallprepscript` specifies the full path to the Python script variant_call_preparation.py (see below).
+`--varsortscript` specifies the full path to the Python script sort_vcf_by_fasta.py (see below).
 
 
 # variant_call_preparation.py
