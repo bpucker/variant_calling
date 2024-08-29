@@ -317,12 +317,12 @@ Mandatory:
 `--out` specifies the output folder.
 
 
-# dNdS_analysis.py
-This script performs an analysis of synonymous (dS) and non-synonymous (dN) variants in genes with premature stop codons.
+# aa_ns_analysis.py
+This script performs an analysis of synonymous (aa<sub>S<sup>) and non-synonymous (aa<sub>N<sup>) variants in genes with premature stop codons.
 
 ```
 Usage
-python dNdS_analysis.py
+python aa_ns_analysis.py
 
 Mandatory:
 --in     STR   Path to NAVIP output file.
