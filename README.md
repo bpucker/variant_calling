@@ -318,7 +318,7 @@ Mandatory:
 
 
 # aa_ns_analysis.py
-This script performs an analysis of synonymous (aa<sub>S</sup>) and non-synonymous (aa<sub>N</sup>) variants in genes with premature stop codons.
+This script performs an analysis of synonymous (aa^S^) and non-synonymous (aa^N^) variants in genes with premature stop codons.
 
 ```
 Usage
